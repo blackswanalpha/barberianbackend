@@ -1,0 +1,19 @@
+Django==4.2.10
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
+django-cors-headers==4.3.1
+whitenoise==6.6.0
+psycopg2-binary==2.9.9
+gunicorn==23.0.0
+Pillow==10.1.0
+requests==2.31.0
+email-validator==2.1.0
+twilio== 9.5.0
+python-decouple==3.8
+django-dirtyfields==1.9.2
+python-dateutil==2.8.2
+dj-database-url==2.1.0
+# Production packages
+django-storages==1.14.2
+python-dotenv==1.0.1
+django-environ==0.11.2

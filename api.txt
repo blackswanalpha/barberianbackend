@@ -1,0 +1,249 @@
+# Barberian API Documentation
+
+This document provides a comprehensive list of all API endpoints in the Barberian application, organized by module and including the HTTP methods supported by each endpoint.
+
+## Base URL
+
+All API endpoints are prefixed with `/api/`
+
+## Authentication Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/auth/token/` | POST | Obtain JWT token pair (access and refresh tokens) |
+| `/api/auth/token/refresh/` | POST | Refresh access token using refresh token |
+| `/api/auth/register/` | POST | Register a new user account |
+| `/api/auth/user/profile/` | GET, PUT | Get or update user profile information |
+| `/api/auth/user/change-password/` | POST | Change user password |
+| `/api/auth/logout/` | POST | Logout and blacklist refresh token |
+| `/api/auth/admin/login/` | POST | Admin-specific login endpoint |
+
+## Admin Module Endpoints
+
+### User Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/users/` | GET, POST | List all users or create a new user |
+| `/api/admin/users/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific user |
+| `/api/admin/users/<id>/activate/` | POST | Activate a user account |
+| `/api/admin/users/<id>/deactivate/` | POST | Deactivate a user account |
+
+### Staff Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/staff/` | GET, POST | List all staff or create a new staff member |
+| `/api/admin/staff/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific staff member |
+
+### Client Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/clients/` | GET, POST | List all clients or create a new client |
+| `/api/admin/clients/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific client |
+
+### Category Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/categories/` | GET, POST | List all categories or create a new category |
+| `/api/admin/categories/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific category |
+
+### Service Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/services/` | GET, POST | List all services or create a new service |
+| `/api/admin/services/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific service |
+| `/api/admin/services/<id>/media/` | POST | Add media to a service |
+| `/api/admin/services/media/<id>/` | DELETE | Delete service media |
+
+### Appointment Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/appointments/` | GET, POST | List all appointments or create a new appointment |
+| `/api/admin/appointments/today/` | GET | Get today's appointments |
+| `/api/admin/appointments/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific appointment |
+| `/api/admin/appointments/<id>/cancel/` | POST | Cancel an appointment |
+| `/api/admin/appointments/<id>/complete/` | POST | Mark an appointment as completed |
+
+### Business Settings
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/settings/` | GET, PUT | Get or update business settings |
+| `/api/admin/business-hours/` | GET, POST | List all business hours or create new business hours |
+| `/api/admin/business-hours/<id>/` | GET, PUT, DELETE | Retrieve, update or delete specific business hours |
+
+### Holiday Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/holidays/` | GET, POST | List all holidays or create a new holiday |
+| `/api/admin/holidays/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific holiday |
+
+### Reports
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/dashboard/` | GET | Get dashboard statistics and summary data |
+| `/api/admin/reports/staff-performance/` | GET | Get staff performance report |
+| `/api/admin/reports/service-analysis/` | GET | Get service analysis report |
+| `/api/admin/reports/appointment-metrics/` | GET | Get appointment metrics report |
+| `/api/admin/reports/` | GET, POST | List all saved reports or create a new report |
+| `/api/admin/reports/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific report |
+| `/api/admin/reports/generate/` | POST | Generate a custom report |
+
+### User Logs
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/logs/` | GET | List all user logs |
+| `/api/admin/logs/<id>/` | DELETE | Delete a specific log |
+
+### Profile Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/profile/` | GET, PUT | Get or update admin profile |
+| `/api/admin/profile/change-password/` | POST | Change admin password |
+
+### Media Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/media/` | GET, POST | List all media files or upload a new media file |
+| `/api/admin/media/<id>/` | GET, PUT, DELETE | Retrieve, update or delete a specific media file |
+
+### SMS Notifications
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/admin/sms-notifications/` | GET | List all SMS notifications |
+| `/api/admin/sms-notifications/<id>/` | GET | Get details of a specific SMS notification |
+| `/api/admin/sms-notifications/send/` | POST | Send a new SMS notification |
+| `/api/admin/sms-notifications/update-status/` | POST | Update SMS delivery status |
+
+## Staff Module Endpoints
+
+### Authentication
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/login/` | POST | Staff-specific login endpoint |
+
+### Schedule Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/schedules/` | GET | List staff schedules |
+| `/api/staff/schedules/create/` | POST | Create a new schedule |
+| `/api/staff/schedules/<id>/` | GET | Get details of a specific schedule |
+| `/api/staff/schedules/<id>/update/` | PUT | Update a specific schedule |
+| `/api/staff/schedules/<id>/delete/` | DELETE | Delete a specific schedule |
+
+### Appointment Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/appointments/` | GET | List all appointments for the staff |
+| `/api/staff/appointments/today/` | GET | Get today's appointments |
+| `/api/staff/appointments/upcoming/` | GET | Get upcoming appointments |
+| `/api/staff/appointments/<id>/` | GET | Get details of a specific appointment |
+| `/api/staff/appointments/<id>/status/` | PUT | Update appointment status |
+
+### Service Browsing
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/services/` | GET | List all services |
+
+### Profile Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/profile/` | GET | Get staff profile |
+| `/api/staff/profile/update/` | PUT | Update staff profile |
+| `/api/staff/profile/change-password/` | POST | Change staff password |
+
+### Settings Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/settings/` | GET, PUT | Get or update staff settings |
+| `/api/staff/availability/` | POST | Toggle staff availability |
+
+### Notification Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/staff/notifications/` | GET | List all notifications for the staff |
+
+## Client Module Endpoints
+
+### Service Browsing
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/client/services/` | GET | List all services |
+| `/api/client/services/<id>/` | GET | Get details of a specific service |
+| `/api/client/categories/` | GET | List all service categories |
+
+### Staff Browsing
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/client/staff/` | GET | List all staff members |
+| `/api/client/staff/<id>/` | GET | Get details of a specific staff member |
+| `/api/client/staff/<id>/availability/` | GET | Check staff availability for a specific date |
+
+### Appointment Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/client/appointments/` | GET | List all appointments for the client |
+| `/api/client/appointments/create/` | POST | Create a new appointment |
+| `/api/client/appointments/<id>/` | GET | Get details of a specific appointment |
+| `/api/client/appointments/<id>/cancel/` | POST | Cancel an appointment |
+
+### Booking
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/client/booking/` | POST | Book an appointment (supports both authenticated and guest bookings) |
+
+### Profile Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/client/profile/` | GET, PUT | Get or update client profile and preferences |
+
+### Business Information
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/client/business-info/` | GET | Get business information, hours, and holidays |
+
+## Notification Module Endpoints
+
+### Notifications
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/notifications/` | GET | List all notifications for the current user |
+| `/api/notifications/<id>/` | GET | Get details of a specific notification |
+| `/api/notifications/<id>/mark-read/` | POST | Mark a notification as read |
+| `/api/notifications/mark-all-read/` | POST | Mark all notifications as read |
+| `/api/notifications/<id>/delete/` | DELETE | Delete a specific notification |
+| `/api/notifications/delete-all/` | DELETE | Delete all notifications |
+
+### SMS Notifications
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/notifications/sms/` | GET | List all SMS notifications (admin only) |
+| `/api/notifications/sms/<id>/` | GET | Get details of a specific SMS notification |
+| `/api/notifications/sms/send/` | POST | Send a new SMS notification |
+| `/api/notifications/sms/update-status/` | POST | Update SMS delivery status |

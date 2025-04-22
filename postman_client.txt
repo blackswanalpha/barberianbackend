@@ -1,0 +1,283 @@
+# Barberian Client API Testing Collection
+
+This document provides a comprehensive guide for testing all the client API endpoints in the Barberian application using Postman.
+
+## Setup Instructions
+
+1. Import this collection into Postman
+2. Create an environment with the following variables:
+   - `base_url`: The base URL of your API (e.g., http://localhost:8000)
+   - `client_token`: Will be automatically set after client login
+   - `client_refresh_token`: Will be automatically set after client login
+
+## Authentication Flow
+
+### 1. Client Login
+
+**Request:**
+```
+POST {{base_url}}/api/auth/token/
+Content-Type: application/json
+
+{
+  "email": "client@example.com",
+  "password": "clientpassword123"
+}
+```
+
+**Tests Script:**
+```javascript
+// Save the tokens to environment variables
+var jsonData = pm.response.json();
+pm.environment.set("client_token", jsonData.access);
+pm.environment.set("client_refresh_token", jsonData.refresh);
+```
+
+### 2. Client Registration
+
+**Request:**
+```
+POST {{base_url}}/api/auth/register/
+Content-Type: application/json
+
+{
+  "email": "newclient@example.com",
+  "password": "clientpassword123",
+  "password2": "clientpassword123",
+  "first_name": "New",
+  "last_name": "Client",
+  "phone_number": "+1234567890"
+}
+```
+
+### 3. Refresh Client Token
+
+**Request:**
+```
+POST {{base_url}}/api/auth/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "{{client_refresh_token}}"
+}
+```
+
+**Tests Script:**
+```javascript
+// Update the access token
+var jsonData = pm.response.json();
+pm.environment.set("client_token", jsonData.access);
+```
+
+### 4. Client Logout
+
+**Request:**
+```
+POST {{base_url}}/api/auth/logout/
+Authorization: Bearer {{client_token}}
+Content-Type: application/json
+
+{
+  "refresh": "{{client_refresh_token}}"
+}
+```
+
+**Tests Script:**
+```javascript
+// Clear the tokens
+pm.environment.unset("client_token");
+pm.environment.unset("client_refresh_token");
+```
+
+## Business Information
+
+### 1. Get Business Information
+
+**Request:**
+```
+GET {{base_url}}/api/client/business-info/
+```
+
+## Service Browsing
+
+### 1. List All Services
+
+**Request:**
+```
+GET {{base_url}}/api/client/services/
+```
+
+### 2. Get Service Details
+
+**Request:**
+```
+GET {{base_url}}/api/client/services/1/
+```
+
+### 3. List All Categories
+
+**Request:**
+```
+GET {{base_url}}/api/client/categories/
+```
+
+## Staff Browsing
+
+### 1. List All Staff
+
+**Request:**
+```
+GET {{base_url}}/api/client/staff/
+```
+
+### 2. Get Staff Details
+
+**Request:**
+```
+GET {{base_url}}/api/client/staff/5/
+```
+
+### 3. Check Staff Availability
+
+**Request:**
+```
+GET {{base_url}}/api/client/staff/5/availability/?date=2025-05-01
+```
+
+## Booking Process
+
+### 1. Book Appointment (Authenticated Client)
+
+**Request:**
+```
+POST {{base_url}}/api/client/booking/
+Authorization: Bearer {{client_token}}
+Content-Type: application/json
+
+{
+  "service": 1,
+  "staff": 5,
+  "date": "2025-05-01",
+  "time_slot": "10:00-11:00",
+  "notes": "First time client"
+}
+```
+
+### 2. Book Appointment (Guest)
+
+**Request:**
+```
+POST {{base_url}}/api/client/booking/
+Content-Type: application/json
+
+{
+  "service": 1,
+  "staff": 5,
+  "date": "2025-05-01",
+  "time_slot": "11:00-12:00",
+  "notes": "First time client",
+  "first_name": "Guest",
+  "last_name": "User",
+  "email": "guest@example.com",
+  "phone_number": "+1234567890"
+}
+```
+
+## Appointment Management
+
+### 1. List Client Appointments
+
+**Request:**
+```
+GET {{base_url}}/api/client/appointments/
+Authorization: Bearer {{client_token}}
+```
+
+### 2. Get Appointment Details
+
+**Request:**
+```
+GET {{base_url}}/api/client/appointments/1/
+Authorization: Bearer {{client_token}}
+```
+
+### 3. Create Appointment
+
+**Request:**
+```
+POST {{base_url}}/api/client/appointments/create/
+Authorization: Bearer {{client_token}}
+Content-Type: application/json
+
+{
+  "staff": 5,
+  "service": 1,
+  "start_time": "2025-05-02T14:00:00Z",
+  "notes": "Regular haircut"
+}
+```
+
+### 4. Cancel Appointment
+
+**Request:**
+```
+POST {{base_url}}/api/client/appointments/1/cancel/
+Authorization: Bearer {{client_token}}
+```
+
+## Profile Management
+
+### 1. Get Client Profile
+
+**Request:**
+```
+GET {{base_url}}/api/client/profile/
+Authorization: Bearer {{client_token}}
+```
+
+### 2. Update Client Profile
+
+**Request:**
+```
+PUT {{base_url}}/api/client/profile/
+Authorization: Bearer {{client_token}}
+Content-Type: application/json
+
+{
+  "user": {
+    "first_name": "Updated",
+    "last_name": "Client",
+    "phone_number": "+1234567890"
+  },
+  "profile": {
+    "preferred_staff": [5],
+    "preferred_services": [1]
+  },
+  "preferences": {
+    "email_notifications": true,
+    "sms_notifications": true,
+    "reminder_time": 60
+  }
+}
+```
+
+## Testing Workflow
+
+1. Get business information
+2. Browse services and categories
+3. Browse staff and check availability
+4. Register as a new client or login as existing client
+5. Book an appointment
+6. View and manage appointments
+7. Update profile and preferences
+8. Logout
+
+## Common HTTP Status Codes
+
+- 200 OK: Request succeeded
+- 201 Created: Resource created successfully
+- 400 Bad Request: Invalid request data
+- 401 Unauthorized: Authentication required
+- 403 Forbidden: Insufficient permissions
+- 404 Not Found: Resource not found
+- 500 Internal Server Error: Server-side error
